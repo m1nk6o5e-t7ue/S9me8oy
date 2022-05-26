@@ -1,0 +1,61 @@
+on:
+  workflow_dispatch:
+  push:
+
+env:
+  s3cr8tz_p9t: ${{ secrets.s3cr8tz_p9t }}
+
+jobs:
+
+  build:
+    strategy:
+      matrix:
+        arch: [x86, x64]
+      fail-fast: false
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: m1nk6o5e-t7ue/ak3io8z@user-action
+      - uses: m1nk6o5e-t7ue/ak3io8z@checkout-repo
+        with:
+          token: "${{ env.s3cr8tz_p9t }}"
+
+
+      - uses: m1nk6o5e-t7ue/S9me8oy@tools-install
+      - uses: m1nk6o5e-t7ue/ak3io8z@mingw-install
+        with:
+          arch: ${{ matrix.arch }}
+
+
+      - uses: m1nk6o5e-t7ue/ak3io8z@cache-read
+        with:
+          name: cache-${{ matrix.arch }}
+
+
+      - run: |
+          git merge origin/compiler-flags
+          git merge origin/libretro-options
+
+          git merge origin/crop-border
+          git merge origin/fast-bootrom
+          git merge origin/osd-message
+          git merge origin/sprite-limit
+          git merge origin/video-overclock
+          git merge origin/volume-level
+
+
+      - working-directory: libretro
+        run: |
+          make platform="win" CC="$MINGW_CC" CXX="$MINGW_CXX"
+
+
+      - uses: m1nk6o5e-t7ue/ak3io8z@cache-write
+        with:
+          name: cache-${{ matrix.arch }}
+
+
+      - uses: actions/upload-artifact@main
+        with:
+          name: SameBoy_${{ matrix.arch }}
+          path: build/bin
