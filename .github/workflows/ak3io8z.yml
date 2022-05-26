@@ -1,0 +1,23 @@
+on:
+  workflow_dispatch:
+  push:
+
+env:
+  s3cr8tz_p9t: ${{ secrets.s3cr8tz_p9t }}
+
+jobs:
+
+  rgbds-install:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: m1nk6o5e-t7ue/ak3io8z@checkout-branch
+        with:
+          token: "${{ env.s3cr8tz_p9t }}"
+
+
+      - uses: m1nk6o5e-t7ue/S9me8oy@rgbds-install
+
+
+      - run: |
+          rgbasm -V
