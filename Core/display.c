@@ -1886,6 +1886,14 @@ skip_slow_mode_3:
                 gb->mode_for_interrupt = 2;
             }
           
+            if (gb->current_line == LINES - 1) {
+                extern int get_video_overclock_timer();
+                if (get_video_overclock_timer()) {
+                    gb->current_line--;
+                    gb->current_lcd_line--;
+                }
+            }
+
             // Todo: unverified timing
             gb->current_lcd_line++;
             if (gb->current_lcd_line == LINES && GB_is_sgb(gb)) {
