@@ -1166,6 +1166,13 @@ static void check_variables()
         }
 
     }
+
+    RETRO_GETVARS_CROP_BORDER
+    RETRO_GETVARS_FAST_BOOTROM
+    RETRO_GETVARS_SPRITE_LIMIT
+    RETRO_GETVARS_VIDEO_OVERCLOCK
+    RETRO_GETVARS_VOLUME_LEVEL
+
     set_variable_visibility();
 }
 

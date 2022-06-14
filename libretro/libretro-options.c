@@ -1,0 +1,6 @@
+#include "crop-border.c"
+#include "fast-bootrom.c"
+#include "osd-message.c"
+#include "sprite-limit.c"
+#include "video-overclock.c"
+#include "volume-level.c"
